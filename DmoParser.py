@@ -39,8 +39,8 @@ class AssaultCubeDmoReader:
             'SV_POS': {'id': 3, 'handler': self.handle_pos},
             'SV_POSC': {'id': 4, 'handler': self.handle_posc},
             'SV_POSN': {'id': 5, 'handler': None},
-            'SV_TEXT': {'id': 6, 'handler': None},
-            'SV_TEAMTEXT': {'id': 7, 'handler': None},
+            'SV_TEXT': {'id': 6, 'handler': self.handle_text},
+            'SV_TEAMTEXT': {'id': 7, 'handler': self.handle_text},
             'SV_TEXTME': {'id': 8, 'handler': None},
             'SV_TEAMTEXTME': {'id': 9, 'handler': None},
             'SV_TEXTPRIVATE': {'id': 10, 'handler': None},
@@ -551,6 +551,10 @@ class AssaultCubeDmoReader:
 
     def handle_clientping(self, p, f):
         self.getint(f)
+
+    def handle_text(self, pname, f):
+	    text = self.getstring(f)
+	    return {'type': pname, 'text': text}
 
     # For things we know we don't care about
     def noop_handler(self, p, f):
